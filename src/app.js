@@ -33,13 +33,17 @@ function render() {
 
   app.innerHTML = '';
 
-  // Botão de Imprimir (fixo, topo direita)
-  const printButton = createPrintButton();
-  app.appendChild(printButton);
-
   // Container principal do currículo
   const container = document.createElement('div');
   container.className = 'resume-container';
+
+  // Botão de Edição (topo esquerda, antes da sidebar)
+  const editButton = createEditButton();
+  app.appendChild(editButton);
+
+  // Botão de Imprimir (topo direita)
+  const printButton = createPrintButton();
+  app.appendChild(printButton);
 
   // Sidebar (esquerda)
   const sidebar = createSidebar();
@@ -88,6 +92,66 @@ function createPrintButton() {
     }, 100);
   };
   return btn;
+}
+
+// Botão de Edição
+function createEditButton() {
+  const btn = document.createElement('button');
+  btn.id = 'edit-btn';
+  btn.className = 'edit-button';
+  btn.innerHTML = `
+    <i data-lucide="edit"></i>
+    Editar
+  `;
+  btn.onclick = () => {
+    showLogin();
+  };
+  return btn;
+}
+
+// Modal de Login para acesso ao editor
+function showLogin() {
+  const password = prompt('Digite a senha para editar o currículo:', '');
+  if (password === 'tatiana2026') {
+    startEditing();
+  } else if (password !== null) {
+    alert('Senha incorreta!');
+  }
+}
+
+// Iniciar modo de edição
+function startEditing() {
+  if (!confirm('Modo de edição ativado. Você pode editar o currículo nos campos abaixo. Deseja continuar?')) {
+    return;
+  }
+  
+  // Substituir o currículo por um formulário de edição
+  app.innerHTML = '';
+  
+  const editContainer = document.createElement('div');
+  editContainer.className = 'edit-container';
+  
+  editContainer.innerHTML = `
+    <div class="edit-header">
+      <h2>Editar Currículo</h2>
+      <button id="cancel-edit" class="cancel-btn">Cancelar</button>
+      <button id="save-edit" class="save-btn">Salvar</button>
+    </div>
+    <div class="edit-form" id="edit-form"></div>
+  `;
+  
+  app.appendChild(editContainer);
+  
+  renderEditForm();
+  
+  // Adicionar eventos dos botões
+  document.getElementById('cancel-edit').onclick = () => {
+    loadData(); // Recarregar o currículo original
+  };
+  
+  document.getElementById('save-edit').onclick = () => {
+    saveEdits();
+  };
 }
 
 // Sidebar (esquerda)
@@ -302,6 +366,235 @@ function createCursosSection() {
   `;
 
   return section;
+}
+
+// Renderizar formulário de edição
+function renderEditForm() {
+  const form = document.getElementById('edit-form');
+  if (!form) return;
+
+  let formHTML = '';
+
+  // Seção de Informações Pessoais
+  formHTML += `
+    <div class="edit-section">
+      <h3>Informações Pessoais</h3>
+      <div class="form-group">
+        <label>Nome Completo</label>
+        <input type="text" id="edit-nome" value="${currentData.nome}">
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="edit-email" value="${currentData.contato.email}">
+      </div>
+      <div class="form-group">
+        <label>Telefones (separados por vírgula)</label>
+        <input type="text" id="edit-telefones" value="${currentData.contato.telefones.join(', ')}">
+      </div>
+      <div class="form-group">
+        <label>Localização</label>
+        <input type="text" id="edit-localizacao" value="${currentData.contato.localizacao}">
+      </div>
+    </div>
+  `;
+
+  // Seção de Resumo
+  formHTML += `
+    <div class="edit-section">
+      <h3>Resumo Profissional</h3>
+      <div class="form-group">
+        <label>Resumo</label>
+        <textarea id="edit-resumo">${currentData.resumo}</textarea>
+      </div>
+    </div>
+  `;
+
+  // Seção de Competências
+  formHTML += `
+    <div class="edit-section">
+      <h3>Competências</h3>
+      <div class="form-group">
+        <label>Competências (uma por linha)</label>
+        <textarea id="edit-competencias" rows="5">${currentData.competencias.join('\n')}</textarea>
+      </div>
+    </div>
+  `;
+
+  // Seção de Formação
+  formHTML += `
+    <div class="edit-section">
+      <h3>Formação</h3>
+      <div id="formacao-list">
+        ${currentData.formacao.map((form, index) => `
+          <div class="form-group formacao-item" data-index="${index}">
+            <div class="form-actions">
+              <label>Formação ${index + 1}</label>
+              <button type="button" class="remove-item-btn" onclick="removeFormacao(${index})">Remover</button>
+            </div>
+            <input type="text" class="edit-formacao-nivel" value="${form.nivel}" placeholder="Nível de formação">
+            <input type="text" class="edit-formacao-instituicao" value="${form.instituicao}" placeholder="Instituição">
+            <input type="text" class="edit-formacao-conclusao" value="${form.conclusao}" placeholder="Conclusão">
+            <input type="text" class="edit-formacao-local" value="${form.local || ''}" placeholder="Local (opcional)">
+          </div>
+        `).join('')}
+      </div>
+      <button type="button" class="add-item-btn" onclick="addFormacao()">+ Adicionar Formação</button>
+    </div>
+  `;
+
+  // Seção de Experiência
+  formHTML += `
+    <div class="edit-section">
+      <h3>Experiência Profissional</h3>
+      <div id="experiencia-list">
+        ${currentData.experiencia.map((exp, index) => `
+          <div class="form-group experiencia-item" data-index="${index}">
+            <div class="form-actions">
+              <label>Experiência ${index + 1}</label>
+              <button type="button" class="remove-item-btn" onclick="removeExperiencia(${index})">Remover</button>
+            </div>
+            <input type="text" class="edit-experiencia-empresa" value="${exp.empresa}" placeholder="Empresa">
+            <input type="text" class="edit-experiencia-periodo" value="${exp.periodo}" placeholder="Período">
+            <input type="text" class="edit-experiencia-cargo" value="${exp.cargo}" placeholder="Cargo">
+            <input type="text" class="edit-experiencia-local" value="${exp.local || ''}" placeholder="Local (opcional)">
+            <textarea class="edit-experiencia-descricao" rows="3" placeholder="Descrição (uma linha por item)">${exp.descricao.join('\n')}</textarea>
+          </div>
+        `).join('')}
+      </div>
+      <button type="button" class="add-item-btn" onclick="addExperiencia()">+ Adicionar Experiência</button>
+    </div>
+  `;
+
+  // Seção de Cursos
+  formHTML += `
+    <div class="edit-section">
+      <h3>Cursos</h3>
+      <div id="cursos-list">
+        ${currentData.cursos.map((curso, index) => `
+          <div class="form-group curso-item" data-index="${index}">
+            <div class="form-actions">
+              <label>Curso ${index + 1}</label>
+              <button type="button" class="remove-item-btn" onclick="removeCurso(${index})">Remover</button>
+            </div>
+            <input type="text" class="edit-curso-nome" value="${curso.nome}" placeholder="Nome do curso">
+            <input type="text" class="edit-curso-instituicao" value="${curso.instituicao}" placeholder="Instituição">
+            <input type="text" class="edit-curso-periodo" value="${curso.periodo}" placeholder="Período">
+            <input type="text" class="edit-curso-cargaHoraria" value="${curso.cargaHoraria || ''}" placeholder="Carga horária (opcional)">
+          </div>
+        `).join('')}
+      </div>
+      <button type="button" class="add-item-btn" onclick="addCurso()">+ Adicionar Curso</button>
+    </div>
+  `;
+
+  form.innerHTML = formHTML;
+}
+
+// Funções auxiliares para manipulação da formação
+function removeFormacao(index) {
+  currentData.formacao.splice(index, 1);
+  renderEditForm();
+}
+
+function addFormacao() {
+  currentData.formacao.push({
+    nivel: '',
+    instituicao: '',
+    conclusao: '',
+    local: ''
+  });
+  renderEditForm();
+}
+
+function removeExperiencia(index) {
+  currentData.experiencia.splice(index, 1);
+  renderEditForm();
+}
+
+function addExperiencia() {
+  currentData.experiencia.push({
+    empresa: '',
+    periodo: '',
+    cargo: '',
+    local: '',
+    descricao: []
+  });
+  renderEditForm();
+}
+
+function removeCurso(index) {
+  currentData.cursos.splice(index, 1);
+  renderEditForm();
+}
+
+function addCurso() {
+  currentData.cursos.push({
+    nome: '',
+    instituicao: '',
+    periodo: '',
+    cargaHoraria: ''
+  });
+  renderEditForm();
+}
+
+// Salvar alterações
+function saveEdits() {
+  try {
+    // Atualizar dados do currentData com os valores do formulário
+    currentData.nome = document.getElementById('edit-nome').value.trim();
+    currentData.contato.email = document.getElementById('edit-email').value.trim();
+    currentData.contato.telefones = document.getElementById('edit-telefones').value
+      .split(',')
+      .map(t => t.trim())
+      .filter(t => t.length > 0);
+    currentData.contato.localizacao = document.getElementById('edit-localizacao').value.trim();
+    currentData.resumo = document.getElementById('edit-resumo').value.trim();
+    currentData.competencias = document.getElementById('edit-competencias').value
+      .split('\n')
+      .map(c => c.trim())
+      .filter(c => c.length > 0);
+
+    // Formação
+    const formacaoElements = document.querySelectorAll('.formacao-item');
+    currentData.formacao = Array.from(formacaoElements).map((el, i) => ({
+      nivel: el.querySelector('.edit-formacao-nivel').value.trim(),
+      instituicao: el.querySelector('.edit-formacao-instituicao').value.trim(),
+      conclusao: el.querySelector('.edit-formacao-conclusao').value.trim(),
+      local: el.querySelector('.edit-formacao-local').value.trim()
+    }));
+
+    // Experiência
+    const experienciaElements = document.querySelectorAll('.experiencia-item');
+    currentData.experiencia = Array.from(experienciaElements).map((el, i) => ({
+      empresa: el.querySelector('.edit-experiencia-empresa').value.trim(),
+      periodo: el.querySelector('.edit-experiencia-periodo').value.trim(),
+      cargo: el.querySelector('.edit-experiencia-cargo').value.trim(),
+      local: el.querySelector('.edit-experiencia-local').value.trim(),
+      descricao: el.querySelector('.edit-experiencia-descricao').value
+        .split('\n')
+        .map(d => d.trim())
+        .filter(d => d.length > 0)
+    }));
+
+    // Cursos
+    const cursosElements = document.querySelectorAll('.curso-item');
+    currentData.cursos = Array.from(cursosElements).map((el, i) => ({
+      nome: el.querySelector('.edit-curso-nome').value.trim(),
+      instituicao: el.querySelector('.edit-curso-instituicao').value.trim(),
+      periodo: el.querySelector('.edit-curso-periodo').value.trim(),
+      cargaHoraria: el.querySelector('.edit-curso-cargaHoraria').value.trim()
+    }));
+
+    // Salvar no localStorage (para uso local)
+    localStorage.setItem('curriculo-tatiana-data', JSON.stringify(currentData));
+
+    // Exibir mensagem e recarregar
+    alert('Currículo atualizado com sucesso!');
+    loadData();
+  } catch (error) {
+    console.error('Erro ao salvar:', error);
+    alert('Erro ao salvar as alterações. Verifique os dados e tente novamente.');
+  }
 }
 
 // Inicializar
