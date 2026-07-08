@@ -357,6 +357,13 @@ body {
     font-size: 14px;
   }
 
+  .edit-button {
+    top: 10px;
+    left: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
   .resume-container {
     flex-direction: column;
     min-height: auto;
@@ -404,6 +411,10 @@ body {
   }
 
   .print-button {
+    display: none !important;
+  }
+
+  .edit-button {
     display: none !important;
   }
 
@@ -695,7 +706,7 @@ body {
 }
 
 .form-group textarea {
-  min-height: 80px;
+  min-height: 120px;
   resize: vertical;
 }
 

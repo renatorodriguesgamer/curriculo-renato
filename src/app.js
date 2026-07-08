@@ -510,12 +510,12 @@ function renderEditForm() {
 }
 
 // Funções auxiliares para manipulação da formação
-function removeFormacao(index) {
+window.removeFormacao = function(index) {
   currentData.formacao.splice(index, 1);
   renderEditForm();
 }
 
-function addFormacao() {
+window.addFormacao = function() {
   currentData.formacao.push({
     nivel: '',
     instituicao: '',
@@ -525,12 +525,12 @@ function addFormacao() {
   renderEditForm();
 }
 
-function removeExperiencia(index) {
+window.removeExperiencia = function(index) {
   currentData.experiencia.splice(index, 1);
   renderEditForm();
 }
 
-function addExperiencia() {
+window.addExperiencia = function() {
   currentData.experiencia.push({
     empresa: '',
     periodo: '',
@@ -541,12 +541,12 @@ function addExperiencia() {
   renderEditForm();
 }
 
-function removeCurso(index) {
+window.removeCurso = function(index) {
   currentData.cursos.splice(index, 1);
   renderEditForm();
 }
 
-function addCurso() {
+window.addCurso = function() {
   currentData.cursos.push({
     nome: '',
     instituicao: '',
