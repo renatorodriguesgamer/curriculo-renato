@@ -67,13 +67,25 @@ python3 -m http.server 5500
 Depois, acesse: **http://localhost:5500**
 
 ### Online (via GitHub Pages)
+
 1. O currículo está hospedado no GitHub Pages
 2. Acesse a URL do repositório (ex: `https://josehroberto.github.io/curriculo-tatiana/`)
-3. Clique no botão **"Imprimir Currículo"** no topo direito para gerar um PDF
+3. Para editar: clique no botão **"Editar"** (topo esquerda) e digite a senha **tatiana2026**
+4. Para gerar PDF: clique no botão **"Imprimir Currículo"** (topo direito)
 
 ## Como editar seu currículo
 
-### Opção 1: Editar via GitHub (Recomendado)
+### Opção 1: Editar pelo navegador (recomendado para smartphone)
+
+1. Acesse o currículo no navegador (https://josehroberto.github.io/curriculo-tatiana/)
+2. Clique no botão verde **"Editar"** (topo esquerda)
+3. Digite a senha: **tatiana2026**
+4. Edite os campos desejados
+5. Clique em **"Salvar"** para salvar as alterações
+
+**Nota**: As alterações são salvas no localStorage do navegador e visíveis imediatamente.
+
+### Opção 2: Editar via GitHub
 
 1. Acesse o repositório no GitHub
 2. Clique em `src/data.json`
