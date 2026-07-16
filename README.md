@@ -60,11 +60,10 @@ curriculo-web/
 No terminal, execute:
 
 ```bash
-cd /home/roberto/projetos/curriculo-renato/src
-python3 -m http.server 5500
+npx http-server src -p 3000
 ```
 
-Depois, acesse: **http://localhost:5500**
+Depois, acesse: **http://localhost:3000**
 
 ### Online (via GitHub Pages)
 
