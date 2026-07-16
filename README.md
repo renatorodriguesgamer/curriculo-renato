@@ -1,6 +1,6 @@
-# Currículo Web - Tatiana Ferreira
+# Currículo Web - Renato da Costa Rodrigues
 
-Sistema web para edição e visualização do currículo de Tatiana Ferreira.
+Sistema web para edição e visualização do currículo de Renato da Costa Rodrigues.
 
 ## 📋 Índice
 
@@ -32,7 +32,7 @@ curriculo-web/
 │   ├── app.js        # Lógica da aplicação
 │   └── data.json     # Dados do currículo em formato JSON
 ├── dist/
-│   └── currículo-tatiana.pdf  # PDF gerado (automático)
+│   └── curriculo-renato.pdf  # PDF gerado (automático)
 ├── scripts/
 │   └── generate-pdf.js  # Script para gerar PDF
 ├── .github/workflows/
@@ -60,7 +60,7 @@ curriculo-web/
 No terminal, execute:
 
 ```bash
-cd /home/roberto/projetos/tatiana/curriculo-web/src
+cd /home/roberto/projetos/curriculo-renato/src
 python3 -m http.server 5500
 ```
 
@@ -69,17 +69,17 @@ Depois, acesse: **http://localhost:5500**
 ### Online (via GitHub Pages)
 
 1. O currículo está hospedado no GitHub Pages
-2. Acesse a URL do repositório (ex: `https://josehroberto.github.io/curriculo-tatiana/`)
-3. Para editar: clique no botão **"Editar"** (topo esquerda) e digite a senha **tatiana2026**
+2. Acesse a URL do repositório (ex: `https://josehroberto.github.io/curriculo-renato/`)
+3. Para editar: clique no botão **"Editar"** (topo esquerda) e digite a senha **renato2026**
 4. Para gerar PDF: clique no botão **"Imprimir Currículo"** (topo direito)
 
 ## Como editar seu currículo
 
 ### Opção 1: Editar pelo navegador (recomendado para smartphone)
 
-1. Acesse o currículo no navegador (https://josehroberto.github.io/curriculo-tatiana/)
+1. Acesse o currículo no navegador (https://josehroberto.github.io/curriculo-renato/)
 2. Clique no botão verde **"Editar"** (topo esquerda)
-3. Digite a senha: **tatiana2026**
+3. Digite a senha: **renato2026**
 4. Edite os campos desejados
 5. Clique em **"Salvar"** para salvar as alterações
 
@@ -168,6 +168,7 @@ O arquivo `data.json` contém todos os dados do seu currículo em formato estrut
   "contato": {
     "telefones": ["(99) 99999-9999"],
     "email": "seu@email.com",
+    "linkedin": "linkedin.com/in/seu-usuario",
     "localizacao": "Cidade - Estado"
   },
   "resumo": "Breve descrição profissional",
@@ -225,6 +226,6 @@ Para dúvidas ou problemas, entre em contato com o desenvolvedor.
 
 ---
 
-© 2026 Currículo de Tatiana Ferreira
+© 2026 Currículo de Renato da Costa Rodrigues
 
 Licenciado sob a [MIT License](LICENSE)# Teste GitHub Pages

@@ -1,7 +1,7 @@
 {
-  "name": "curriculo-tatiana",
+  "name": "curriculo-renato",
   "version": "1.0.0",
-  "description": "Currículo web de Tatiana Ferreira",
+  "description": "Currículo web de Renato da Costa Rodrigues",
   "main": "index.html",
   "scripts": {
     "start": "npx http-server src -p 3000",
@@ -11,6 +11,6 @@
     "curriculo",
     "pdf"
   ],
-  "author": "Tatiana Ferreira",
+  "author": "Renato da Costa Rodrigues",
   "license": "MIT"
 }

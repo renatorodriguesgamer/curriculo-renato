@@ -11,7 +11,7 @@ const app = document.getElementById('app');
 async function loadData() {
   try {
     // Tenta carregar do localStorage primeiro (dados salvos localmente)
-    const storedData = localStorage.getItem('curriculo-tatiana-data');
+    const storedData = localStorage.getItem('curriculo-renato-data');
     
     if (storedData) {
       currentData = JSON.parse(storedData);
@@ -123,7 +123,7 @@ function createEditButton() {
 // Modal de Login para acesso ao editor
 function showLogin() {
   const password = prompt('Digite a senha para editar o currículo:', '');
-  if (password === 'tatiana2026') {
+  if (password === 'renato2026') {
     startEditing();
   } else if (password !== null) {
     alert('Senha incorreta!');
@@ -239,6 +239,13 @@ function createContactSection() {
 
   contatoHTML += `
     <div class="contact-item"><i data-lucide="mail"></i><a href="mailto:${currentData.contato.email}">${currentData.contato.email}</a></div>
+  `;
+
+  if (currentData.contato.linkedin) {
+    contatoHTML += `<div class="contact-item"><i data-lucide="linkedin"></i><a href="https://${currentData.contato.linkedin}" target="_blank">${currentData.contato.linkedin}</a></div>`;
+  }
+
+  contatoHTML += `
     <div class="contact-item"><i data-lucide="map-pin"></i><span>${currentData.contato.localizacao}</span></div>
   `;
 
@@ -424,6 +431,10 @@ function renderEditForm() {
       <div class="form-group">
         <label>Localização</label>
         <input type="text" id="edit-localizacao" value="${currentData.contato.localizacao}">
+      </div>
+      <div class="form-group">
+        <label>LinkedIn</label>
+        <input type="text" id="edit-linkedin" value="${currentData.contato.linkedin || ''}" placeholder="linkedin.com/in/seu-usuario">
       </div>
     </div>
   `;
@@ -615,6 +626,7 @@ async function saveEdits() {
       .map(t => t.trim())
       .filter(t => t.length > 0);
     currentData.contato.localizacao = document.getElementById('edit-localizacao').value.trim();
+    currentData.contato.linkedin = document.getElementById('edit-linkedin').value.trim();
     currentData.resumo = document.getElementById('edit-resumo').value.trim();
     currentData.competencias = document.getElementById('edit-competencias').value
       .split('\n')
@@ -653,7 +665,7 @@ async function saveEdits() {
     }));
 
     // Salvar no localStorage (para uso local imediato)
-    localStorage.setItem('curriculo-tatiana-data', JSON.stringify(currentData));
+    localStorage.setItem('curriculo-renato-data', JSON.stringify(currentData));
 
     alert('Alterações salvas com sucesso!\n\nAs alterações estão visíveis agora na tela.');
 
