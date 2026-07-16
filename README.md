@@ -69,7 +69,7 @@ Depois, acesse: **http://localhost:5500**
 ### Online (via GitHub Pages)
 
 1. O currículo está hospedado no GitHub Pages
-2. Acesse a URL do repositório (ex: `https://josehroberto.github.io/curriculo-renato/`)
+2. Acesse a URL do repositório (ex: `https://renatorodriguesgamer.github.io/curriculo-renato/`)
 3. Para editar: clique no botão **"Editar"** (topo esquerda) e digite a senha **renato2026**
 4. Para gerar PDF: clique no botão **"Imprimir Currículo"** (topo direito)
 
@@ -77,7 +77,7 @@ Depois, acesse: **http://localhost:5500**
 
 ### Opção 1: Editar pelo navegador (recomendado para smartphone)
 
-1. Acesse o currículo no navegador (https://josehroberto.github.io/curriculo-renato/)
+1. Acesse o currículo no navegador (https://renatorodriguesgamer.github.io/curriculo-renato/)
 2. Clique no botão verde **"Editar"** (topo esquerda)
 3. Digite a senha: **renato2026**
 4. Edite os campos desejados
